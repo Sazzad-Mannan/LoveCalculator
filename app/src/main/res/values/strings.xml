@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Love Calculator</string>
+    <string name="link"><u>How it works?</u></string>
+    <string name="how">Suppose 1st name = John. \nAnd 2nd name = Anna.\nWe write \"John loves Anna\".\nThen we take the repeat number of similar letter and cut those letters.\nSuppose,here 1st latter is j and there is only 1 j.So we get 1.\nSame way next letter o,there is 2 o in that line.so we get 2.\nIn this way,we get 121311112.\nThen we add numbers in two opposite site.Here 1+2,2+1,1+1,3+1 and 1\nWe get 33241\nDo it again we get 472\nThen 67\nResult is 67% \n </string>
+    <string name="fun">[NB: It\'s a fun game,it don\'t indicate real life love percentage.]</string>
+</resources>
