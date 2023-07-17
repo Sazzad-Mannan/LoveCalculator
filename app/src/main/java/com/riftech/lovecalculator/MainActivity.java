@@ -3,14 +3,21 @@ package com.riftech.lovecalculator;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -25,6 +32,12 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.ump.ConsentDebugSettings;
+import com.google.android.ump.ConsentForm;
+import com.google.android.ump.ConsentInformation;
+import com.google.android.ump.ConsentRequestParameters;
+import com.google.android.ump.FormError;
+import com.google.android.ump.UserMessagingPlatform;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,11 +63,71 @@ public class MainActivity extends AppCompatActivity {
     private View v;
     public Intent intent,intent2;
     private static final String TAG = "MainActivity";
+    private ConsentInformation consentInformation;
+    private ConsentForm consentForm;
+    AlertDialog.Builder builder;
+    AlertDialog customAlertDialog;
+    SharedPreferences sharedPreferences;
+    String selected_lang,st,tost;
+
+    String[] countries;
+    int selected_index;
+    Button btn;
+    TextView txt1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+        // Set tag for under age of consent. false means users are not under
+        // age.
+        ConsentRequestParameters params = new ConsentRequestParameters
+                .Builder()
+                .setTagForUnderAgeOfConsent(false)
+                .build();
+
+        consentInformation = UserMessagingPlatform.getConsentInformation(this);
+        consentInformation.requestConsentInfoUpdate(
+                this,
+                params,
+                new ConsentInformation.OnConsentInfoUpdateSuccessListener() {
+                    @Override
+                    public void onConsentInfoUpdateSuccess() {
+                        // The consent information state was updated.
+                        // You are now ready to check if a form is available.
+
+                        if (consentInformation.isConsentFormAvailable()) {
+
+                            loadForm();
+                        }
+                    }
+                },
+                new ConsentInformation.OnConsentInfoUpdateFailureListener() {
+                    @Override
+                    public void onConsentInfoUpdateFailure(FormError formError) {
+                        // Handle the error.
+                    }
+                });
+
+
+        // Storing data into SharedPreferences
+        sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        if(!sharedPreferences.contains("index")) {
+// Creating an Editor object to edit(write to the file)
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+// Storing the key and its value as the data fetched from edittext
+            myEdit.putInt("index",0);
+
+// Once the changes have been made, we need to commit to apply those changes made,
+// otherwise, it will throw an error
+            myEdit.apply();
+        }
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -72,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
         pgsBar = (ProgressBar) findViewById(R.id.pBar);
         et1=(EditText) findViewById(R.id.editText2);
         et2=(EditText) findViewById(R.id.editText3);
+        btn=(Button) findViewById(R.id.button);
+        txt1=(TextView) findViewById(R.id.textView4);
+
+        changelang();
     }
 
 
@@ -310,6 +387,198 @@ number2="";
             gotoActivity2(intent2);
             //startGame();
         }
+    }
+
+    public void loadForm() {
+        // Loads a consent form. Must be called on the main thread.
+        UserMessagingPlatform.loadConsentForm(
+                this,
+                new UserMessagingPlatform.OnConsentFormLoadSuccessListener() {
+                    @Override
+                    public void onConsentFormLoadSuccess(ConsentForm consentForm) {
+                        MainActivity.this.consentForm = consentForm;
+                        if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.REQUIRED) {
+                            consentForm.show(
+                                    MainActivity.this,
+                                    new ConsentForm.OnConsentFormDismissedListener() {
+                                        @Override
+                                        public void onConsentFormDismissed(@Nullable FormError formError) {
+                                            if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.OBTAINED) {
+                                                // App can start requesting ads.
+                                            }
+
+                                            // Handle dismissal by reloading form.
+                                            loadForm();
+                                        }
+                                    });
+                        }
+                    }
+                },
+                new UserMessagingPlatform.OnConsentFormLoadFailureListener() {
+                    @Override
+                    public void onConsentFormLoadFailure(FormError formError) {
+                        // Handle the error.
+                    }
+                }
+        );
+    }
+
+    // create an action bar button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
+        // If you don't have res/menu, just create a directory named "menu" inside res
+        getMenuInflater().inflate(R.menu.change, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_favorite) {
+            // do something here
+            // single item array instance to store which element is selected by user initially
+            // it should be set to zero meaning none of the element is selected by default
+            selected_index = sharedPreferences.getInt("index", 0);
+            final int[] checkedItem = {selected_index};
+
+            // AlertDialog builder instance to build the alert dialog
+            builder = new AlertDialog.Builder(MainActivity.this);
+
+            // set the custom icon to the alert dialog
+            builder.setIcon(R.drawable.change);
+
+            // title of the alert dialog
+            builder.setTitle("Change Language:");
+
+            // list of the items to be displayed to the user in the
+            // form of list so that user can select the item from
+            final String[] listItems = new String[]{"English","Indonesian", "Español", "Français", "Italiano","Deutsch","Português","Русский"};
+
+
+            // the function setSingleChoiceItems is the function which
+            // builds the alert dialog with the single item selection
+            builder.setSingleChoiceItems(listItems, checkedItem[0], (dialog, which) -> {
+                // update the selected item which is selected by the user so that it should be selected
+                // when user opens the dialog next time and pass the instance to setSingleChoiceItems method
+                checkedItem[0] = which;
+
+                // now also update the TextView which previews the selected item
+                //tvSelectedItemPreview.setText("Selected Item is : " + listItems[which]);
+
+
+
+
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+// Storing the key and its value as the data fetched from edittext
+                myEdit.putInt("index",which);
+
+// Once the changes have been made, we need to commit to apply those changes made,
+// otherwise, it will throw an error
+                myEdit.apply();
+
+                changelang();
+                // when selected an item the dialog should be closed with the dismiss method
+                dialog.dismiss();
+
+
+            });
+
+            // set the negative button if the user is not interested to select or change already selected item
+            builder.setNegativeButton("Cancel", (dialog, which) -> {
+
+            });
+
+            // create and build the AlertDialog instance with the AlertDialog builder instance
+            customAlertDialog = builder.create();
+
+            // show the alert dialog when the button is clicked
+            customAlertDialog.show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void changelang() {
+        selected_index = sharedPreferences.getInt("index", 0);
+        switch (selected_index){
+            case 0:
+
+                btn.setText(getText(R.string.btn1));
+                et1.setHint(getString(R.string.h1));
+                et2.setHint(getString(R.string.h2));
+                txt1.setText(getString(R.string.link));
+                tost=getString(R.string.toast);
+                this.setTitle(getString(R.string.app_name));
+                break;
+            case 1:
+                btn.setText(getText(R.string.btn1_ind));
+                et1.setHint(getString(R.string.h1_ind));
+                et2.setHint(getString(R.string.h2_ind));
+                txt1.setText(getString(R.string.link_ind));
+                tost=getString(R.string.toast_ind);
+                this.setTitle(getString(R.string.app_name_ind));
+                break;
+            case 2:
+                btn.setText(getText(R.string.btn1_es));
+                et1.setHint(getString(R.string.h1_es));
+                et2.setHint(getString(R.string.h2_es));
+                txt1.setText(getString(R.string.link_es));
+                tost=getString(R.string.toast_es);
+                this.setTitle(getString(R.string.app_name_es));
+                break;
+            case 3:
+                btn.setText(getText(R.string.btn1_fr));
+                et1.setHint(getString(R.string.h1_fr));
+                et2.setHint(getString(R.string.h2_fr));
+                txt1.setText(getString(R.string.link_fr));
+                tost=getString(R.string.toast_fr);
+                this.setTitle(getString(R.string.app_name_fr));
+                break;
+            case 4:
+                btn.setText(getText(R.string.btn1_it));
+                et1.setHint(getString(R.string.h1_it));
+                et2.setHint(getString(R.string.h2_it));
+                txt1.setText(getString(R.string.link_it));
+                tost=getString(R.string.toast_it);
+                this.setTitle(getString(R.string.app_name_it));
+                break;
+            case 5:
+                btn.setText(getText(R.string.btn1_de));
+                et1.setHint(getString(R.string.h1_de));
+                et2.setHint(getString(R.string.h2_de));
+                txt1.setText(getString(R.string.link_de));
+                tost=getString(R.string.toast_de);
+                this.setTitle(getString(R.string.app_name_de));
+                break;
+            case 6:
+                btn.setText(getText(R.string.btn1_pt));
+                et1.setHint(getString(R.string.h1_pt));
+                et2.setHint(getString(R.string.h2_pt));
+                txt1.setText(getString(R.string.link_pt));
+                tost=getString(R.string.toast_pt);
+                this.setTitle(getString(R.string.app_name_pt));
+                break;
+            case 7:
+                btn.setText(getText(R.string.btn1_ru));
+                et1.setHint(getString(R.string.h1_ru));
+                et2.setHint(getString(R.string.h2_ru));
+                txt1.setText(getString(R.string.link_ru));
+                tost=getString(R.string.toast_ru);
+                this.setTitle(getString(R.string.app_name_ru));
+                break;
+            default:
+                btn.setText(getText(R.string.btn1));
+                et1.setHint(getString(R.string.h1));
+                et2.setHint(getString(R.string.h2));
+                txt1.setText(getString(R.string.link));
+                tost=getString(R.string.toast);
+                this.setTitle(getString(R.string.app_name));
+                break;
+        }
+
     }
 
 }

@@ -3,9 +3,7 @@
 
     <domain-config cleartextTrafficPermitted="true">
 
-
         <domain includeSubdomains="true">love-calculator.p.rapidapi.com</domain>
-
 
     </domain-config>
 
