@@ -498,6 +498,22 @@ number2="";
             // show the alert dialog when the button is clicked
             customAlertDialog.show();
         }
+        if (id == R.id.action_share) {
+            // do something here
+            // single item array instance to store which element is selected by user initially
+            // it should be set to zero meaning none of the element is selected by default
+            try {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Love Calculator");
+                String shareMessage= "\nLet me recommend you this application\n\n";
+                shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName() +"\n\n";
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "choose one"));
+            } catch(Exception e) {
+                //e.toString();
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 
