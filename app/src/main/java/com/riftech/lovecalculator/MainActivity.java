@@ -1,7 +1,5 @@
 package com.riftech.lovecalculator;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +20,6 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -32,27 +29,15 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.ump.ConsentDebugSettings;
 import com.google.android.ump.ConsentForm;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.FormError;
 import com.google.android.ump.UserMessagingPlatform;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
-    private InterstitialAd mInterstitialAd,mInterstitialAd2;
+    private InterstitialAd mInterstitialAd,mInterstitialAd2,mInterstitialAd3;
     private EditText et1,et2;
     private Integer code=1;
     private String jsonString="";
@@ -61,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar pgsBar;
     String status,s = null;
     private View v;
-    public Intent intent,intent2;
+    public Intent intent,intent2,intent3;
     private static final String TAG = "MainActivity";
     private ConsentInformation consentInformation;
-    private ConsentForm consentForm;
+    private ConsentForm consentForm ;
     AlertDialog.Builder builder;
     AlertDialog customAlertDialog;
     SharedPreferences sharedPreferences;
@@ -73,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     String[] countries;
     int selected_index;
     Button btn;
-    TextView txt1;
+    TextView txt1,txt2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,12 +126,14 @@ public class MainActivity extends AppCompatActivity {
 
        loadAd();
         loadAd2();
+        loadAd3();
 
         pgsBar = (ProgressBar) findViewById(R.id.pBar);
         et1=(EditText) findViewById(R.id.editText2);
         et2=(EditText) findViewById(R.id.editText3);
         btn=(Button) findViewById(R.id.button);
-        txt1=(TextView) findViewById(R.id.textView4);
+        txt1=(TextView) findViewById(R.id.textView8);
+        txt2=(TextView) findViewById(R.id.textView4);
 
         changelang();
     }
@@ -158,6 +145,12 @@ public class MainActivity extends AppCompatActivity {
 
       intent2 = new Intent(getBaseContext(), MainActivity2.class);
       showInterstitial2();
+
+    }
+    public void show_apps(final View view) {
+
+        intent3 = new Intent(getBaseContext(), MainActivity3.class);
+        showInterstitial3();
 
     }
     public void start_match( final View view) {
@@ -231,6 +224,10 @@ number2="";
 
     private void gotoActivity2(Intent intent2) {
         startActivity(intent2);
+    }
+
+    private void gotoActivity3(Intent intent3) {
+        startActivity(intent3);
     }
 
 
@@ -357,6 +354,69 @@ number2="";
 
                 });
     }
+
+    //ca-app-pub-7831928589958637/3603645924
+    public void loadAd3() {
+        AdRequest adRequest4 = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,"ca-app-pub-7831928589958637/3603645924", adRequest4,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd3 = interstitialAd;
+                        Log.i(TAG, "onAdLoaded");
+                        //Toast.makeText(MainActivity.this, "onAdLoaded()", Toast.LENGTH_SHORT).show();
+                        interstitialAd.setFullScreenContentCallback(
+                                new FullScreenContentCallback() {
+                                    @Override
+                                    public void onAdDismissedFullScreenContent() {
+                                        // Called when fullscreen content is dismissed.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        MainActivity.this.mInterstitialAd3 = null;
+                                        Log.d("TAG", "The ad was dismissed.");
+
+                                        loadAd2();
+                                        gotoActivity3(intent3);
+                                        //dismissed();
+
+                                    }
+
+                                    @Override
+                                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                        // Called when fullscreen content failed to show.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        MainActivity.this.mInterstitialAd3 = null;
+                                        Log.d("TAG", "The ad failed to show.");
+                                    }
+
+                                    @Override
+                                    public void onAdShowedFullScreenContent() {
+                                        // Called when fullscreen content is shown.
+                                        Log.d("TAG", "The ad was shown.");
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.i(TAG, loadAdError.getMessage());
+                        mInterstitialAd3 = null;
+                       /* String error =
+                                String.format(
+                                        "domain: %s, code: %d, message: %s",
+                                        loadAdError.getDomain(), loadAdError.getCode(), loadAdError.getMessage());
+                        Toast.makeText(
+                                MainActivity.this, "onAdFailedToLoad() with error: " + error, Toast.LENGTH_SHORT)
+                                .show();*/
+                    }
+
+                });
+    }
     private void showInterstitial() {
         // Show the ad if it's ready. Otherwise toast and restart the game.
         if (mInterstitialAd != null) {
@@ -385,6 +445,21 @@ number2="";
             //Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
             loadAd2();
             gotoActivity2(intent2);
+            //startGame();
+        }
+    }
+    private void showInterstitial3() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (mInterstitialAd3 != null) {
+            mInterstitialAd3.show(this);
+
+
+        }
+
+        else {
+            //Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+            loadAd3();
+            gotoActivity3(intent3);
             //startGame();
         }
     }
@@ -526,6 +601,7 @@ number2="";
                 et1.setHint(getString(R.string.h1));
                 et2.setHint(getString(R.string.h2));
                 txt1.setText(getString(R.string.link));
+                txt2.setText(getString(R.string.link2));
                 tost=getString(R.string.toast);
                 this.setTitle(getString(R.string.app_name));
                 break;
@@ -534,6 +610,7 @@ number2="";
                 et1.setHint(getString(R.string.h1_ind));
                 et2.setHint(getString(R.string.h2_ind));
                 txt1.setText(getString(R.string.link_ind));
+                txt2.setText(getString(R.string.link2_ind));
                 tost=getString(R.string.toast_ind);
                 this.setTitle(getString(R.string.app_name_ind));
                 break;
@@ -542,6 +619,7 @@ number2="";
                 et1.setHint(getString(R.string.h1_es));
                 et2.setHint(getString(R.string.h2_es));
                 txt1.setText(getString(R.string.link_es));
+                txt2.setText(getString(R.string.link2_es));
                 tost=getString(R.string.toast_es);
                 this.setTitle(getString(R.string.app_name_es));
                 break;
@@ -550,6 +628,7 @@ number2="";
                 et1.setHint(getString(R.string.h1_fr));
                 et2.setHint(getString(R.string.h2_fr));
                 txt1.setText(getString(R.string.link_fr));
+                txt2.setText(getString(R.string.link2_fr));
                 tost=getString(R.string.toast_fr);
                 this.setTitle(getString(R.string.app_name_fr));
                 break;
@@ -558,6 +637,7 @@ number2="";
                 et1.setHint(getString(R.string.h1_it));
                 et2.setHint(getString(R.string.h2_it));
                 txt1.setText(getString(R.string.link_it));
+                txt2.setText(getString(R.string.link2_it));
                 tost=getString(R.string.toast_it);
                 this.setTitle(getString(R.string.app_name_it));
                 break;
@@ -566,6 +646,7 @@ number2="";
                 et1.setHint(getString(R.string.h1_de));
                 et2.setHint(getString(R.string.h2_de));
                 txt1.setText(getString(R.string.link_de));
+                txt2.setText(getString(R.string.link2_de));
                 tost=getString(R.string.toast_de);
                 this.setTitle(getString(R.string.app_name_de));
                 break;
@@ -574,6 +655,7 @@ number2="";
                 et1.setHint(getString(R.string.h1_pt));
                 et2.setHint(getString(R.string.h2_pt));
                 txt1.setText(getString(R.string.link_pt));
+                txt2.setText(getString(R.string.link2_pt));
                 tost=getString(R.string.toast_pt);
                 this.setTitle(getString(R.string.app_name_pt));
                 break;
@@ -582,6 +664,7 @@ number2="";
                 et1.setHint(getString(R.string.h1_ru));
                 et2.setHint(getString(R.string.h2_ru));
                 txt1.setText(getString(R.string.link_ru));
+                txt2.setText(getString(R.string.link2_ru));
                 tost=getString(R.string.toast_ru);
                 this.setTitle(getString(R.string.app_name_ru));
                 break;
@@ -590,6 +673,7 @@ number2="";
                 et1.setHint(getString(R.string.h1));
                 et2.setHint(getString(R.string.h2));
                 txt1.setText(getString(R.string.link));
+                txt2.setText(getString(R.string.link2));
                 tost=getString(R.string.toast);
                 this.setTitle(getString(R.string.app_name));
                 break;
