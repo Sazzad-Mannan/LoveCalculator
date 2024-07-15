@@ -3,10 +3,11 @@ package com.riftech.lovecalculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -21,6 +22,10 @@ String rs1,rs2,rs3,rs4;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        // Set the status bar text color to dark
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
         AdView mAdView = findViewById(R.id.adView2);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -31,7 +36,7 @@ String rs1,rs2,rs3,rs4;
          txt3 = (TextView) findViewById(R.id.textView);
 
         Bundle bundle = getIntent().getExtras();
-        String percentage2 = bundle.getString("percentage2","h");
+        String percentage2 = bundle.getString("percentage2","80");
         Integer percentage = Integer.parseInt(percentage2);
         String name = bundle.getString("names","Romeo & Juliet");
         String result = null;

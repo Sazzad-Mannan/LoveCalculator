@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Love Calculator</string>
     <string name="link">How it works?</string>
-    <string name="link2">Similar interesting games</string>
+    <string name="link2">Similar interesting apps</string>
     <string name="how">Suppose 1st name = John. \nAnd 2nd name = Anna.\nWe write \"John loves Anna\".\nThen we take the repeat number of similar letter and cut those letters.\nSuppose,here 1st latter is j and there is only 1 j.So we get 1.\nSame way next letter o,there is 2 o in that line.so we get 2.\nIn this way,we get 121311112.\nThen we add numbers in two opposite site.Here 1+2,2+1,1+1,3+1 and 1\nWe get 33241\nDo it again we get 472\nThen 67\nResult is 67% \n </string>
     <string name="fun">[NB: It\'s a fun game,it don\'t indicate real life love percentage.]</string>
     <string name="language">English</string>
@@ -13,7 +13,7 @@
     <!--    Indonesian-->
     <string name="app_name_ind">Kalkulator Cinta</string>
     <string name="link_ind">Bagaimana itu bekerja?</string>
-    <string name="link2_ind">Game menarik serupa</string>
+    <string name="link2_ind">Aplikasi menarik serupa</string>
     <string name="how_ind">Misalkan nama pertama = John. \nDan nama ke-2 = Anna.\nKita tulis \"John love Anna\".\nKemudian kita ambil nomor pengulangan dari huruf yang mirip dan potong huruf-huruf itu.\nMisalkan,ini yang terakhir adalah j dan hanya ada 1 j.Jadi kita dapatkan 1.\nDengan cara yang sama huruf berikutnya o,ada 2 o di baris itu.jadi kita mendapatkan 2.\nDengan cara ini,kita mendapatkan 121311112.\nKemudian kita menjumlahkan angka di dua sisi yang berlawanan.Ini 1+2,2+1 ,1+1,3+1 dan 1\nKita mendapatkan 33241\nLakukan lagi kita mendapatkan 472\nKemudian 67\nHasilnya adalah 67% \n </string>
     <string name="fun_ind">[NB: Ini permainan yang menyenangkan, tidak menunjukkan persentase cinta di kehidupan nyata.]</string>
     <string name="language_ind">Indonesian</string>
@@ -25,7 +25,7 @@
     <!--    Spanish-->
     <string name="app_name_es">Calculadora de amor</string>
     <string name="link_es">¿Cómo funciona?</string>
-    <string name="link2_es">Juegos interesantes similares</string>
+    <string name="link2_es">Aplicaciones interesantes similares</string>
     <string name="how_es">Supongamos que el primer nombre = John. \nY el segundo nombre = Anna.\nEscribimos \"John ama a Anna\".\nLuego tomamos el número repetido de la letra similar y cortamos esas letras.\nSupongamos que aquí el primero es j y solo hay 1 j. Así que obtiene 1.\nDe la misma manera, en la siguiente letra o, hay 2 o en esa línea. Entonces obtenemos 2.\nDe esta manera, obtenemos 121311112.\nLuego sumamos números en dos sitios opuestos. Aquí 1+2,2+1 ,1+1,3+1 y 1\nObtenemos 33241\nHazlo de nuevo, obtenemos 472\nEntonces 67\nEl resultado es 67%\n</string>
     <string name="fun_es">[NB: Es un juego divertido, no indica el porcentaje de amor en la vida real.]</string>
     <string name="language_es">Español</string>
@@ -37,7 +37,7 @@
     <!--    French-->
     <string name="app_name_fr">Calculatrice d\'amour</string>
     <string name="link_fr">Comment ça fonctionne?</string>
-    <string name="link2_fr">Jeux intéressants similaires</string>
+    <string name="link2_fr">Applications intéressantes similaires</string>
     <string name="how_fr">Supposons que 1er nom = John. \nEt 2e nom = Anna.\nNous écrivons \"John aime Anna\".\nEnsuite, nous prenons le nombre de répétitions d\'une lettre similaire et coupons ces lettres.\nSupposons qu\'ici, le 1er dernier est j et qu\'il n\'y a que 1 j.Donc, nous obtenir 1.\nDe la même manière que la prochaine lettre o, il y a 2 o dans cette ligne.Nous obtenons donc 2.\nDe cette façon, nous obtenons 121311112.\nEnsuite, nous ajoutons des nombres dans deux sites opposés.Ici 1+2,2+1 ,1+1,3+1 et 1\nNous obtenons 33241\nRecommencez nous obtenons 472\nEnsuite 67\nLe résultat est de 67 % \n </string>
     <string name="fun_fr">[NB: C\'est un jeu amusant, il n\'indique pas le pourcentage d\'amour réel.]</string>
     <string name="language_fr">Français</string>
@@ -48,7 +48,7 @@
     <!--    Italian-->
     <string name="app_name_it">Calcolatrice d\'amore</string>
     <string name="link_it">Come funziona?</string>
-    <string name="link2_it">Giochi interessanti simili</string>
+    <string name="link2_it">Applicazioni interessanti simili</string>
     <string name="how_it">Supponiamo che il primo nome = John. \nE secondo nome = Anna.\nScriviamo \"Giovanni ama Anna\".\nQuindi prendiamo il numero ripetuto di una lettera simile e tagliamo quelle lettere.\nSupponiamo che qui la prima sia j e ci sia solo 1 j. Quindi noi ottieni 1.\nAllo stesso modo alla lettera o successiva, c\'è 2 o in quella riga. Quindi otteniamo 2.\nIn questo modo, otteniamo 121311112.\nQuindi aggiungiamo i numeri in due siti opposti.Qui 1+2,2+1 ,1+1,3+1 e 1\nOtteniamo 33241\nRipetiamo otteniamo 472\nPoi 67\nIl risultato è 67% \n </string>
     <string name="fun_it">[NB: è un gioco divertente, non indica la percentuale di amore nella vita reale.]</string>
     <string name="language_it">Italiano</string>
@@ -59,7 +59,7 @@
     <!--    German-->
     <string name="app_name_de">Liebesrechner</string>
     <string name="link_de">Wie es funktioniert?</string>
-    <string name="link2_de">Ähnliche interessante Spiele</string>
+    <string name="link2_de">Ähnliche interessante Anwendungen</string>
     <string name="how_de">Angenommen, Vorname = John. \nUnd 2. Name = Anna.\nWir schreiben „John liebt Anna“.\nDann nehmen wir die Wiederholungsnummer ähnlicher Buchstaben und schneiden diese Buchstaben aus.\nAngenommen, hier ist der 1. Letztere j und es gibt nur 1 j. Also wir Erhalten Sie 1.\nAuf die gleiche Weise erhalten Sie beim nächsten Buchstaben o 2 o in dieser Zeile. Wir erhalten also 2.\nAuf diese Weise erhalten wir 121311112.\nDann addieren wir Zahlen an zwei gegenüberliegenden Stellen. Hier 1+2,2+1 ,1+1,3+1 und 1\nWir erhalten 33241\nWenn wir es noch einmal machen, erhalten wir 472\nDann 67\nErgebnis ist 67 % \n </string>
     <string name="fun_de">[NB: Es ist ein lustiges Spiel, es zeigt nicht den Liebesprozentsatz im wirklichen Leben an.]</string>
     <string name="language_de">Deutsch</string>
@@ -70,7 +70,7 @@
     <!--    Portuguese-->
     <string name="app_name_pt">Calculadora do amor</string>
     <string name="link_pt">Como funciona?</string>
-    <string name="link2_pt">Jogos interessantes semelhantes</string>
+    <string name="link2_pt">Aplicações interessantes semelhantes</string>
     <string name="how_pt">Suponha que o primeiro nome = John. \nE o segundo nome = Anna.\nNós escrevemos \"John ama Anna\".\nEm seguida, pegamos o número repetido de letras semelhantes e cortamos essas letras.\nSuponha que o primeiro último seja j e haja apenas 1 j. obtemos 1.\nDa mesma forma, na próxima letra o, há 2 o nessa linha.então obtemos 2.\nDessa forma, obtemos 121311112.\nEm seguida, adicionamos números em dois locais opostos.Aqui 1+2,2+1 ,1+1,3+1 e 1\nObtemos 33241\nFaça de novo, obtemos 472\nEntão 67\nO resultado é 67%\n </string>
     <string name="fun_pt">[NB: É um jogo divertido, não indica porcentagem de amor na vida real.]</string>
     <string name="language_pt">Português</string>
@@ -81,7 +81,7 @@
     <!--    Russian-->
     <string name="app_name_ru">Калькулятор любви</string>
     <string name="link_ru">Как это работает?</string>
-    <string name="link2_ru">Похожие интересные игры</string>
+    <string name="link2_ru">Похожие интересные приложения</string>
     <string name="how_ru">Предположим, первое имя = Джон. \nИ 2-е имя = Анна.\nМы пишем \"Джон любит Анну\".\nЗатем мы берем повторяющееся число похожих букв и вырезаем эти буквы.\nПредположим, здесь 1-е последнее это j, а есть только 1 j.Таким образом, мы получаем 1.\nТаким же образом следующая буква o,в этой строке 2 o.Поэтому мы получаем 2.\nТаким образом,мы получаем 121311112.\nЗатем мы складываем числа в двух противоположных местах.Здесь 1+2,2+1 ,1+1,3+1 и 1\nПолучим 33241\nПовторим еще раз, получим 472\nЗатем 67\nРезультат 67%\n </string>
     <string name="fun_ru">[Примечание: это забавная игра, в ней не указан процент любви в реальной жизни.]</string>
     <string name="language_ru">Русский</string>
